@@ -95,6 +95,28 @@ public class DBManager {
             e.printStackTrace();
         }
     }
+
+    public void updateOLAP(){
+        try{
+            local.implementQuery("DROP * FROM OLAP_airport");
+            local.implementQuery("DROP * FROM OLAP_route");
+            local.implementQuery("DROP * FROM OLAP_airline");
+            ResultSet rsLine = local.selectQuery("SELECT * FROM airline;");
+            ResultSet rsAirport = local.selectQuery("SELECT * FROM airport;");
+            ResultSet rsCity = local.selectQuery("SELECT * FROM city;");
+            ResultSet rsCountry = local.selectQuery("SELECT * FROM country;");
+            ResultSet rsPlane = local.selectQuery("SELECT * FROM plane;");
+            ResultSet rsRoute = local.selectQuery("SELECT * FROM route;");
+            ResultSet rsTimezone = local.selectQuery("SELECT * FROM timezone;");
+            ResultSet rsTimezoneCity = local.selectQuery("SELECT * FROM timezone_city;");
+            while(){
+
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     /*
     public void updateOLAP(){
         String insertSt = "VALUES(";
