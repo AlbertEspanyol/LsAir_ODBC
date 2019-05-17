@@ -101,16 +101,21 @@ public class DBManager {
             local.implementQuery("DROP * FROM OLAP_airport");
             local.implementQuery("DROP * FROM OLAP_route");
             local.implementQuery("DROP * FROM OLAP_airline");
-            ResultSet rsLine = local.selectQuery("SELECT * FROM airline;");
-            ResultSet rsAirport = local.selectQuery("SELECT * FROM airport;");
-            ResultSet rsCity = local.selectQuery("SELECT * FROM city;");
-            ResultSet rsCountry = local.selectQuery("SELECT * FROM country;");
-            ResultSet rsPlane = local.selectQuery("SELECT * FROM plane;");
-            ResultSet rsRoute = local.selectQuery("SELECT * FROM route;");
-            ResultSet rsTimezone = local.selectQuery("SELECT * FROM timezone;");
-            ResultSet rsTimezoneCity = local.selectQuery("SELECT * FROM timezone_city;");
-            while(){
+            ResultSet rsLine = local.selectQuery("SELECT a.airline_id, a.name, a.alias, a.iata, a.icao, a.country, c.code, c.dst FROM airline as a, country as c WHERE a.country = c.country;");
+            ResultSet rsAirport = local.selectQuery("SELECT a.airport_id, a.name, a.city, a.country, a.iata, a.icao, a.latitude, a.longitude, a.altitude, c.code, c.dst, t.timezone_id, t.timezone_olson, t.timezone_utc, t.daylight_saving_time " +
+                    "FROM airport as a, country as c, timezone as t, timezone_city as tc WHERE a.country = c.country AND a.country = tc.country AND a.city = tc.city AND tc.timezone_id = t.timezone_id;");
+            ResultSet rsRoute = local.selectQuery("SELECT r.route_id, r.airline_id, r.src_airport_id, r.dst_airport_id, r.plane, r.stops, r.codeshare, p.name, p.iata_code, p.icao_code FROM route as r, plane as p \n" +
+                    "WHERE r.plane = p.plane_id;");
 
+            while(rsLine.next()){
+                /*
+                local.implementQuery("INSERT INTO olap_airline(airport_id, name, city, country, iata, icao, latitude, longitude, altitude) " +
+                        "VALUES(" + rs.getInt("airport_id") + ", '"
+                        + rs.getString("name") + "', '" + rs.getString("city") + "', '"
+                        + rs.getString("country") + "', '" + rs.getString("iata") + "', '"
+                        + rs.getString("icao") + "', '" + rs.getString("latitude") + "', "
+                        + rs.getDouble("longitude") + ", " + rs.getDouble("altitude") + ");");
+                        */
             }
         }catch(SQLException e){
             e.printStackTrace();
