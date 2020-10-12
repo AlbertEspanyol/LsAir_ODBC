@@ -1,6 +1,5 @@
 public class Main {
     public static void main(String[] args){
-
         Connector airConn = new Connector("lsair_user", "lsair_bbdd", Menu.showMenu(), "puigpedros.salle.url.edu", 3306);
         airConn.connect();
 
